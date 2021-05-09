@@ -20,7 +20,7 @@ public class NBody{
 			return re;
 	}
 
-	static Body[] readBodies(String s){
+	static Planet[] readBodies(String s){
 
 
 			/* Start reading in national_salt_production.txt */
@@ -28,7 +28,7 @@ public class NBody{
 			int n = in.readInt();
 			double radius = in.readDouble();
 			int k = 0 ;
-			Body[ ] b = new Body [n];
+			Planet[ ] b = new Planet [n];
 			while( k < n  ){
 
 				double xP = in.readDouble();
@@ -38,7 +38,7 @@ public class NBody{
 				double mass = in.readDouble();
 				String img = in.readString();
 
-				b[k] = new Body (xP,yP,yV,xV,mass,img);
+				b[k] = new Planet (xP,yP,yV,xV,mass,img);
 			//    b[k].change(xP,yP,yV,xV,mass,img);
 				k ++ ;
 			}
@@ -74,7 +74,7 @@ public class NBody{
 
         double r = NBody.readRadius ( filename );
 
-        Body[] Body = NBody.readBodies ( filename );
+        Planet[] body = NBody.readBodies ( filename );
 
         StdDraw.setScale(-r, r);
         
@@ -82,9 +82,9 @@ public class NBody{
  	    
  	    StdDraw.picture(0, 0, background);
 
- 	    for(int i = 0 ; i < Body.length; i++ ){
+ 	    for(int i = 0 ; i < body.length; i++ ){
 
- 	    	Body[i].draw();
+ 	    	body[i].draw();
 
  	    }
 
@@ -97,24 +97,24 @@ public class NBody{
 
  	     
   	        StdDraw.clear(); 
- 	    	double [] xForce = new double [Body.length];
+ 	    	double [] xForce = new double [body.length];
 
- 	    	double [] yForce = new double [Body.length];
+ 	    	double [] yForce = new double [body.length];
 
- 	    	for(int i = 0 ; i < Body.length; i++ ){
- 	    		yForce[i] = Body[i].calcNetForceExertedByY(Body);
- 	    		xForce[i] = Body[i].calcNetForceExertedByX(Body);
+ 	    	for(int i = 0 ; i < body.length; i++ ){
+ 	    		yForce[i] = body[i].calcNetForceExertedByY(body);
+ 	    		xForce[i] = body[i].calcNetForceExertedByX(body);
  	  		}
 
-			for(int i = 0 ; i < Body.length; i++ ){
- 	    		Body[i].update(dt,xForce[i],yForce[i]);
+			for(int i = 0 ; i < body.length; i++ ){
+ 	    		body[i].update(dt,xForce[i],yForce[i]);
  	  		}
 
  	  	    StdDraw.picture(0, 0, background);
 
- 	 	    for(int i = 0 ; i < Body.length; i++ ){
+ 	 	    for(int i = 0 ; i < body.length; i++ ){
 
- 	  		  	Body[i].draw();
+ 	  		  	body[i].draw();
 
  	 	    }
 
@@ -125,12 +125,12 @@ public class NBody{
  	 	    StdDraw.pause(23);
  	    }
 
- 	    StdOut.printf("%d\n", Body.length);
+ 	    StdOut.printf("%d\n", body.length);
 		StdOut.printf("%.2e\n", r);
-		for (int i=0; i < Body.length; i++) {
+		for (int i=0; i < body.length; i++) {
   		StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
-                  Body[i].xxPos, Body[i].yyPos, Body[i].xxVel,
-                  Body[i].yyVel, Body[i].mass, Body[i].imgFileName);   
+                  body[i].xxPos, body[i].yyPos,body[i].xxVel,
+                  body[i].yyVel, body[i].mass, body[i].imgFileName);   
 		}
 
     }
