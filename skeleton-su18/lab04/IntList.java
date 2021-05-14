@@ -46,15 +46,33 @@ public class IntList {
     }
 
     public void add(int value) {
-        return;
+    	IntList p=this;
+    	while(p.rest != null) {
+    		p = p.rest;
+    	}
+    	p.rest = new IntList(value,null);
+      
     }
 
     public int smallest() {
-        return -1;
+        int small = first;
+        int num=1;
+        while(num <= this.size()) {
+        	if(get(num) < small)
+        		small = get (num);
+        	num++;
+        }
+    	return small;
+             
     }
 
     public int squaredSum() {
-        return -1;
+    	int ssum;
+    	int i;
+    	for(i=1; i<=this.size(); i++) {
+    		ssum += i*i;
+    	}
+        return ssum;
     }
 
     public static void dSquareList(IntList L) {
@@ -63,12 +81,42 @@ public class IntList {
             L = L.rest;
         }
     }
+    
+    public static IntList squareListRecursive(IntList L) {
+        if (L == null) {
+            return null;
+        }
+        return new IntList(L.first * L.first, squareListRecursive(L.rest));
+    }
 
     public static IntList catenate(IntList A, IntList B) {
-        return null;
+    	IntList Ca;
+    	if (B == null) {
+    		Ca = A;
+    		return Ca;
+    	}
+    	if (A == null) {
+    		Ca = B;
+    		return Ca;    	
+    	}
+    	if (A != null) {
+    		Ca = new IntList (A.first, catenate(A.rest,B));
+    	}
+    	
+        return Ca;
     }
 
     public static IntList dcatenate(IntList A, IntList B) {
-        return null;
+    	if (B == null) return A;
+    	if (A == null) return B;
+    	while(A != null) {
+    		A.rest = dcatenate(A.rest,B);
+    	}
+    	return A;
+    	   	
     }
+    
+
+    
+    
 }
